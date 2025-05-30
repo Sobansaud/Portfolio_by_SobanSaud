@@ -1,0 +1,76 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+
+@keyframes gradientBackground {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.animated-gradient {
+  background: linear-gradient(-45deg, #6366f1, #9333ea, #ec4899, #3b82f6);
+  background-size: 400% 400%;
+  animation: gradientBackground 12s ease infinite;
+}
+
+
+.navbar-content,
+.footer-content {
+  position: relative;
+  z-index: 1;
+  color: white;
+  padding: 1rem;
+}
+
+body, html, #__next {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+main {
+  min-height: 100vh; /* ya jitna content hai usse cover karne ke liye */
+  display: flex;
+  flex-direction: column;
+}
+
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(139, 92, 246, 0.6);
+  }
+}
+
+.animate-glow {
+  animation: glow 3s ease-in-out infinite;
+}
