@@ -2,7 +2,7 @@
 
 import BackgroundAnimation from './BackgroundAnimation';
 import { motion } from 'framer-motion';
-import { FaLinkedin, FaEnvelope } from 'react-icons/fa';
+import { FaLinkedin, FaEnvelope, FaGithub } from 'react-icons/fa';
 import { FaXTwitter } from 'react-icons/fa6';
 import Link from 'next/link';
 
@@ -66,6 +66,15 @@ export default function Footer() {
               className="hover:text-indigo-400 transition-colors"
             >
               <FaEnvelope size={26} />
+            </a>
+            <a
+              href="https://github.com/Sobansaud"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub"
+              className="hover:text-indigo-400 transition-colors"
+            >
+              <FaGithub size={26} />
             </a>
           </div>
         </div>
