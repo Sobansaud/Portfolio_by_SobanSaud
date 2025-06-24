@@ -29,13 +29,13 @@ export default function Hero() {
         <motion.div
           animate={{ y: [0, -20, 0] }}
           transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-          className="w-72 h-72 sm:w-80 sm:h-80 md:w-96 md:h-96 bg-white/10 backdrop-blur-xl border-4 border-indigo-500 rounded-3xl shadow-2xl overflow-hidden relative group transition-all duration-300"
+          className="w-80 h-72 sm:w-80 sm:h-80 md:w-96 md:h-96 bg-white/10 backdrop-blur-xl border-4 border-indigo-500 rounded-3xl shadow-2xl overflow-hidden relative group transition-all duration-300"
         >
           <Image
             src="/2.jpg"
             alt="Muhammad Soban Saud"
             fill
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+            className="w-72 h-60 object-cover group-hover:scale-105 transition-transform duration-700"
             priority
           />
         </motion.div>
