@@ -12,11 +12,11 @@ export default function Hero() {
   };
 
   return (
-    <section className="relative flex flex-col items-center justify-center min-h-screen px-6 sm:px-10 md:px-16 lg:px-24 overflow-hidden bg-transparent text-center pt-24">
-      {/* Animated Background Circles */}
+  <section className="hero-section relative flex flex-col items-center justify-center min-h-screen px-6 sm:px-10 md:px-16 lg:px-24 overflow-hidden bg-transparent text-center pt-24">
+      {/* Animated Background Circles (reduced on mobile) */}
       <div className="absolute inset-0 z-0 pointer-events-none">
-        <div className="absolute w-64 h-64 sm:w-80 sm:h-80 bg-indigo-600 opacity-40 rounded-full -top-20 -left-20 sm:-top-24 sm:-left-24 blur-3xl animate-pulse"></div>
-        <div className="absolute w-64 h-64 sm:w-80 sm:h-80 bg-pink-600 opacity-40 rounded-full -bottom-20 -right-20 sm:-bottom-24 sm:-right-24 blur-3xl animate-ping"></div>
+        <div className="absolute w-64 h-64 sm:w-80 sm:h-80 bg-indigo-600 opacity-36 rounded-full -top-20 -left-20 sm:-top-24 sm:-left-24 blur-3xl animate-pulse hide-on-mobile"></div>
+        <div className="absolute w-64 h-64 sm:w-80 sm:h-80 bg-pink-600 opacity-28 rounded-full -bottom-20 -right-20 sm:-bottom-24 sm:-right-24 blur-3xl animate-ping hide-on-mobile"></div>
       </div>
 
       {/* Content */}
@@ -27,17 +27,19 @@ export default function Hero() {
         className="relative z-10 flex flex-col items-center gap-6 max-w-4xl w-full"
       >
         <motion.div
-          animate={{ y: [0, -20, 0] }}
-          transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-          className="w-80 h-72 sm:w-80 sm:h-80 md:w-96 md:h-96 bg-white/10 backdrop-blur-xl border-4 border-indigo-500 rounded-3xl shadow-2xl overflow-hidden relative group transition-all duration-300"
+          animate={{ y: [0, -8, 0] }}
+          transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+          className="w-72 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 bg-white/6 backdrop-blur-xl border-2 border-indigo-500 rounded-2xl shadow-xl overflow-hidden relative group transition-all duration-300"
         >
-          <Image
-            src="/2.jpg"
-            alt="Muhammad Soban Saud"
-            fill
-            className="w-72 h-60 object-cover group-hover:scale-105 transition-transform duration-700"
-            priority
-          />
+          <div className="relative w-full h-full hero-image mx-auto overflow-hidden rounded-2xl">
+            <Image
+              src="/professional.png"
+              alt="Muhammad Soban Saud"
+              fill
+              className="object-cover group-hover:scale-103 transition-transform duration-700"
+              priority
+            />
+          </div>
         </motion.div>
 
         {/* Name & Title */}

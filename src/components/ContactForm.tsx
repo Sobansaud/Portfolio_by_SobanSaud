@@ -34,7 +34,7 @@ const Contact = () => {
 
       if (data.success) {
         setResult("✅ Message Sent Successfully!");
-        event.target.reset();
+        (event.target as HTMLFormElement).reset();
         setName('');
         setEmail('');
         setMsg('');
@@ -47,7 +47,7 @@ const Contact = () => {
   };
 
   return (
-    <section className="relative w-full min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 py-20 bg-gradient-to-br from-black via-gray-900 to-black">
+  <section className="relative w-full min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 py-20 bg-transparent">
       <BackgroundAnimation />
 
       <div className="relative z-10 w-full max-w-2xl text-white text-center">

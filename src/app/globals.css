@@ -1,76 +1,177 @@
 @import "tailwindcss";
 
+/* Design tokens: modern, professional palette */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg-900: #071025; /* deeper, very dark navy (kept for fallbacks) */
+  --bg-800: #0b1320;
+  --surface: #0b1320;
+  /* Hero color (matches Tailwind indigo-600 used in hero) */
+  --hero-bg: #4f46e5;
+  --muted: #9fb0c8;
+  --accent: #7c3aed; /* indigo-violet */
+  --accent-2: #06b6d4; /* teal */
+  --accent-3: #f59e0b; /* amber */
+  --text-primary: #e9f2fb; /* soft white for body text */
+  --text-secondary: #b6c6d8;
+  --glass: rgba(255,255,255,0.03);
+  --glass-2: rgba(255,255,255,0.02);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: light) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --bg-900: #f8fafc;
+    --bg-800: #eef2f7;
+    --surface: #ffffff;
+    --muted: #475569;
+    --accent: #4f46e5;
+    --accent-2: #0891b2;
+    --accent-3: #d97706;
+    --text-primary: #0b1220;
+    --text-secondary: #334155;
+    --glass: rgba(0,0,0,0.03);
+    --glass-2: rgba(0,0,0,0.015);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-
-@keyframes gradientBackground {
-  0%, 100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-}
-
-.animated-gradient {
-  background: linear-gradient(-45deg, #6366f1, #9333ea, #ec4899, #3b82f6);
-  background-size: 400% 400%;
-  animation: gradientBackground 12s ease infinite;
-}
-
-
-.navbar-content,
-.footer-content {
-  position: relative;
-  z-index: 1;
-  color: white;
-  padding: 1rem;
-}
-
-body, html, #__next {
+/* Basic layout */
+html, body, #__next {
   height: 100%;
   margin: 0;
   padding: 0;
+  /* Single solid background for a consistent, professional look */
+  --site-bg: var(--bg-900);
+  background: var(--site-bg) !important;
+  color: var(--text-primary) !important;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
+/* Ensure default text color on common elements is readable */
+body, p, h1, h2, h3, h4, h5, a, li, span {
+  color: var(--text-primary) !important;
+}
+
+/* Soften any explicit white backgrounds used in components (cards, forms) */
+.bg-white, .bg-white\/5, .bg-white\/10 {
+  background: rgba(255,255,255,0.03) !important; /* subtle surface */
+  color: var(--text-primary) !important;
+}
+
+/* Common card surface helper to enforce readable background */
+.surface {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.04);
+}
+
+/* Slightly lighter surface for whole sections, but keep hero untouched */
+section:not(.hero-section) {
+  background: rgba(255,255,255,0.02);
+}
+
+/* Optional class to apply a slightly stronger surface when needed */
+.section-surface {
+  background: rgba(255,255,255,0.035);
+  border-radius: 12px;
+  padding: 0.5rem;
+}
+
+/* Chatbot styles */
+.chatbot-button {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 9999; /* raised to sit above animated/transparent layers */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 54px;
+  height: 54px;
+  border-radius: 9999px;
+  background: linear-gradient(180deg, var(--accent), var(--accent-2));
+  color: white;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.5);
+  border: none;
+}
+
+.chatbot-panel {
+  position: fixed;
+  right: 20px;
+  bottom: 88px;
+  z-index: 99999; /* ensure panel floats above all content */
+  width: 340px;
+  max-height: 60vh;
+  background: linear-gradient(180deg, rgba(6,6,10,0.96), rgba(12,12,20,0.9));
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 12px 40px rgba(2,6,23,0.6);
+}
+
+.chatbot-header { padding: 12px 14px; border-bottom: 1px solid rgba(255,255,255,0.04); }
+.chatbot-title { font-weight: 700; color: white; }
+.chatbot-sub { font-size: 12px; color: var(--text-secondary); }
+.chatbot-messages { padding: 8px; overflow:auto; flex: 1; }
+.chatbot-empty { color: var(--text-secondary); font-size: 13px; padding: 12px 6px; }
+.chatbot-msg { margin-bottom: 10px; max-width: 88%; }
+.chatbot-msg.user { align-self: flex-end; text-align: right; }
+.chatbot-msg.bot { align-self: flex-start; }
+.chatbot-text { background: rgba(255,255,255,0.06); padding: 8px 10px; border-radius: 8px; color: var(--text-primary); }
+.chatbot-time { font-size: 11px; color: var(--text-secondary); margin-top: 4px; }
+.chatbot-input-area { display:flex; gap:8px; padding: 10px; border-top: 1px solid rgba(255,255,255,0.04); }
+.chatbot-input { flex: 1; padding: 8px 10px; border-radius: 8px; background: rgba(255,255,255,0.02); color: var(--text-primary); border: 1px solid rgba(255,255,255,0.03); }
+.chatbot-send { background: var(--accent); color: white; padding: 8px 10px; border-radius: 8px; border:none; }
+
 main {
-  min-height: 100vh; /* ya jitna content hai usse cover karne ke liye */
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
-@keyframes glow {
-  0%, 100% {
-    box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
-  }
-  50% {
-    box-shadow: 0 0 40px rgba(139, 92, 246, 0.6);
-  }
+/* Softer animated gradient (used sparingly) */
+@keyframes gradientBackground {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+.animated-gradient {
+  background: linear-gradient(120deg, var(--accent), var(--accent-2), var(--accent-3));
+  background-size: 300% 300%;
+  animation: gradientBackground 18s ease infinite;
 }
 
-.animate-glow {
-  animation: glow 3s ease-in-out infinite;
+/* Subtle glow utility */
+@keyframes glow {
+  0%, 100% { box-shadow: 0 0 18px rgba(124, 58, 237, 0.18); }
+  50% { box-shadow: 0 0 36px rgba(6, 182, 212, 0.16); }
 }
+.animate-glow { animation: glow 4s ease-in-out infinite; }
+
+/* Readability helpers */
+.glass { background: var(--glass); backdrop-filter: blur(6px); }
+.glass-2 { background: var(--glass-2); backdrop-filter: blur(4px); }
+
+/* Responsive helpers */
+@media (max-width: 640px) {
+  :root { --base-gap: 0.75rem; }
+  .hide-on-mobile { display: none !important; }
+  .hero-image { width: 220px; height: 180px; }
+  /* Make chatbot panel use most of the width on small screens */
+  .chatbot-panel { right: 10px; left: 10px; width: auto; bottom: 88px; max-height: 55vh; }
+  .chatbot-button { right: 16px; bottom: 16px; }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+  :root { --base-gap: 1rem; }
+}
+
+/* Utility for accessible focus */
+:focus { outline: 3px solid rgba(124,58,237,0.18); outline-offset: 3px; }
+
+/* Small animation optimization */
+* { transform-style: preserve-3d; }
+
+
+
+
+ 

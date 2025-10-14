@@ -14,6 +14,7 @@ const navLinks = [
   { name: 'Skills', href: '/skills' },
   { name: 'Projects', href: '/projects' },
   { name: 'Contact', href: '/contact' },
+  { name: 'YouTube', href: 'http://www.youtube.com/@CodeVerseSoban' },
 ];
 
 export default function Navbar() {
@@ -37,7 +38,7 @@ export default function Navbar() {
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.7, ease: 'easeOut' }}
       className={`fixed w-full top-0 left-0 z-50 transition-shadow duration-300 ${scrolled ? 'shadow-md' : ''
-        } animated-gradient bg-opacity-90 backdrop-blur-sm`}
+        } glass bg-opacity-80 backdrop-blur-sm`}
     >
       <div className="max-w-7xl mx-auto px-6 py-4 flex md:justify-between justify-start items-center">
         {/* Logo */}
@@ -73,7 +74,7 @@ export default function Navbar() {
                 className={`cursor-pointer ${isActive ? 'text-indigo-600 underline underline-offset-4' : ''
                   }`}
               >
-                <Link href={href} className="hover:text-indigo-600 transition-colors duration-200">
+                <Link href={href as any} className="hover:text-indigo-600 transition-colors duration-200">
                   {name}
                 </Link>
               </motion.li>
@@ -83,6 +84,17 @@ export default function Navbar() {
 
         {/* Desktop Social Icons */}
         <div className="hidden md:flex items-center gap-6 text-gray-700">
+          <a
+            href="http://www.youtube.com/@CodeVerseSoban"
+            target="_blank"
+            rel="noreferrer"
+            className="hover:scale-110 transition-transform duration-200 hover:text-indigo-600"
+            aria-label="YouTube"
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+              <path d="M23.498 6.186a2.997 2.997 0 0 0-2.106-2.12C19.86 3.5 12 3.5 12 3.5s-7.86 0-9.392.566A2.997 2.997 0 0 0 .502 6.186 31.424 31.424 0 0 0 0 12a31.424 31.424 0 0 0 .502 5.814 2.997 2.997 0 0 0 2.106 2.12C4.14 20.5 12 20.5 12 20.5s7.86 0 9.392-.566a2.997 2.997 0 0 0 2.106-2.12A31.424 31.424 0 0 0 24 12a31.424 31.424 0 0 0-.502-5.814zM9.75 15.02V8.98L15.5 12l-5.75 3.02z" />
+            </svg>
+          </a>
           <a
             href="https://x.com/Sobansaud12345?t=hy8XskYHj_4-c-giiekJww&s=09"
             target="_blank"
@@ -133,7 +145,7 @@ export default function Navbar() {
             {navLinks.map(({ name, href }) => (
               <li key={name}>
                 <Link
-                  href={href}
+                  href={href as any}
                   onClick={handleCloseMenu}
                   className={`block hover:text-indigo-600 transition-colors ${pathname === href ? 'text-indigo-600 underline underline-offset-4' : ''
                     }`}

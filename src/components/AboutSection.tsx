@@ -75,7 +75,7 @@ export default function AboutSection() {
           {/* Education Card */}
           <motion.div
             whileHover={{ scale: 1.05, rotate: 1 }}
-            className="bg-gray-900 bg-opacity-40 backdrop-blur-md rounded-xl shadow-xl p-6 border-2 border-indigo-600"
+            className="bg-gray-200 bg-opacity-40 backdrop-blur-md rounded-xl shadow-xl p-6 border-2 border-indigo-600"
           >
             <FaGraduationCap className="text-4xl text-indigo-400 mb-4 mx-auto animate-bounce" />
             <h3 className="text-xl font-bold text-indigo-300 mb-2">📘 Education</h3>
@@ -96,7 +96,7 @@ export default function AboutSection() {
           {/* Journey Card */}
           <motion.div
             whileHover={{ scale: 1.05, rotate: -1 }}
-            className="bg-gray-900 bg-opacity-40 backdrop-blur-md rounded-xl shadow-xl p-6 border-2 border-pink-600"
+            className="bg-gray-200 bg-opacity-40 backdrop-blur-md rounded-xl shadow-xl p-6 border-2 border-pink-600"
           >
             <FaCode className="text-4xl text-pink-400 mb-4 mx-auto animate-spin-slow" />
 
@@ -116,7 +116,7 @@ export default function AboutSection() {
           {/* Current Focus Card */}
           <motion.div
             whileHover={{ scale: 1.05 }}
-            className="bg-gray-900 bg-opacity-40 backdrop-blur-md rounded-xl shadow-xl p-6 border-2 border-yellow-500"
+            className="bg-gray-200 bg-opacity-40 backdrop-blur-md rounded-xl shadow-xl p-6 border-2 border-yellow-500"
           >
             <FaRobot className="text-4xl text-yellow-400 mb-4 mx-auto animate-pulse" />
             <h3 className="text-xl font-bold text-yellow-300 mb-2">🧠 Current Focus</h3>
