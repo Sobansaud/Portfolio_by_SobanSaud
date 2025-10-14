@@ -5,6 +5,12 @@ import { motion } from 'framer-motion';
 
 const projects = [
   {
+    title : "CodeFusion.AI",
+    image: '/codefusion.PNG',
+    description: "CodeFusion.AI is an AI-powered platform that instantly generates full-stack websites with frontend, backend, and database code. Supports 30+ languages and frameworks. Export to GitHub or ZIP. Pro plan offers enhanced features and increased code generations.",
+    link: "https://codefusion.site"
+  },
+  {
     title: 'Bikes Ecommerce Store',
     image: '/file3.PNG',
     description: 'Fully responsive and complete Next.js ecommerce website for bikes.',
