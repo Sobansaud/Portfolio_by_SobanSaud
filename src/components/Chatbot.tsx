@@ -58,9 +58,28 @@ const Chatbot: React.FC = () => {
   ]);
   const [inputValue, setInputValue] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  // Small seeded knowledge base as a fast fallback if the Gemini-backed API is unreachable
+  const LOCAL_KB: { keywords: string[]; answer: string }[] = [
+    { keywords: ['name', 'who are you', 'who is'], answer: "I'm Muhammad Soban Saud — a Full-Stack Developer who builds responsive websites, APIs, and AI tools." },
+    { keywords: ['skills', 'skill', 'technologies', 'tech'], answer: 'I work with Next.js, React, TypeScript, Tailwind CSS, Node.js, Python, and various AI tools.' },
+    { keywords: ['projects', 'portfolio', 'work'], answer: 'See the Projects section — notable work includes CodeFusion.AI and Agentia AI.' },
+    { keywords: ['contact', 'email', 'hire'], answer: 'Email me at sobansaud3@gmail.com or use the Contact section on the site.' },
+    { keywords: ['youtube', 'video'], answer: 'My YouTube: https://www.youtube.com/@CodeVerseSoban' },
+  ];
+
+  function localAnswer(query: string) {
+    const q = query.toLowerCase();
+    for (const item of LOCAL_KB) {
+      if (item.keywords.some((k) => q.includes(k))) return item.answer;
+    }
+    return null;
+  }
+
+  const scrollToBottom = (behavior: ScrollBehavior = 'smooth') => {
+    // Scroll only the chat container area to avoid jumping the whole page
+    messagesEndRef.current?.scrollIntoView({ behavior });
   };
 
   useEffect(() => {
@@ -68,37 +87,51 @@ const Chatbot: React.FC = () => {
   }, [messages]);
 
   const handleSendMessage = async (text: string) => {
-    if (!text.trim()) return;
+    const trimmed = text.trim();
+    if (!trimmed) return;
 
-    setMessages((prev) => [...prev, { text, isBot: false, timestamp: new Date() }]);
+    // Append user message optimistically and keep focus on the input
+    setMessages((prev) => [...prev, { text: trimmed, isBot: false, timestamp: new Date() }]);
     setInputValue("");
+    inputRef.current?.focus();
     setIsTyping(true);
 
+    // ensure the chat scrolls to show the user's message without moving the page
+    requestAnimationFrame(() => scrollToBottom('auto'));
+
     try {
-      const response = await fetch("/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: text, context: systemContext }),
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: trimmed, context: systemContext }),
       });
 
-      const data = await response.json();
+      if (!res.ok) {
+        // try to parse body for a helpful message
+        const errText = await res.text().catch(() => res.statusText || 'Unknown error');
+        console.warn('API /api/chat returned', res.status, errText);
+        throw new Error(errText || 'Bad response');
+      }
 
-      setMessages((prev) => [
-        ...prev,
-        { text: data.response || data.answer || "I'm happy to help!", isBot: true, timestamp: new Date() },
-      ]);
+      const data = await res.json().catch(() => ({}));
+      const botReply = data?.response || data?.answer || data?.result || null;
+
+      if (botReply) {
+        setMessages((prev) => [...prev, { text: botReply, isBot: true, timestamp: new Date() }]);
+      } else {
+        // fallback: try local KB
+        const fallback = localAnswer(trimmed) || "I'm happy to help — please ask another way or check the Projects/Contact sections.";
+        setMessages((prev) => [...prev, { text: fallback, isBot: true, timestamp: new Date() }]);
+      }
     } catch (err) {
-      console.error("Chatbot error:", err);
-      setMessages((prev) => [
-        ...prev,
-        {
-          text: "⚠️ Sorry, I’m having trouble connecting right now. Try asking about my projects or skills!",
-          isBot: true,
-          timestamp: new Date(),
-        },
-      ]);
+      console.error('Chatbot send error:', err);
+      const fallback = localAnswer(trimmed) || "⚠️ I couldn't reach the assistant — try again or check your connection.";
+      setMessages((prev) => [...prev, { text: fallback, isBot: true, timestamp: new Date() }]);
     } finally {
+      // small delay to ensure DOM updated before smooth scroll
+      setTimeout(() => scrollToBottom('smooth'), 50);
       setIsTyping(false);
+      inputRef.current?.focus();
     }
   };
 
