@@ -40,7 +40,7 @@ export default function AboutSection() {
 
           {/* Image */}
           <img
-            src="/professional.png"
+            src="/about.png"
             alt="Muhammad Soban Saud"
             className="w-full h-full object-cover object-center rounded-2xl shadow-xl relative z-10"
           />
